@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const RateSchema = new mongoose.Schema({
-    user_id: {type: Number, required: true},
-    books: {type:String, required: true},
+    user_id: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+    book: {type: mongoose.Schema.Types.ObjectId, ref: 'Book'},
     rate:{type:Number},
     comment:{type:String}
-}, { timestamps: true });
+}, { timestamps: true , collection: 'rates' });
 const Rate = mongoose.model('Rate', RateSchema);
 
 module.exports = Rate;

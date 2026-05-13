@@ -2,7 +2,7 @@ const mongoose =require('mongoose');
 
 const connectToDatabase = async()=>{
     try{
-        await mongoose.connect('mongodb://127.0.0.1:27017/CollecLIB');
+        await mongoose.connect('mongodb+srv://lesochkek:Parol1234@litrate.1zm7ycw.mongodb.net/?appName=LitRate/CollecLIB');
         console.log('mongoDB connect successfully');
     }
     catch(error){

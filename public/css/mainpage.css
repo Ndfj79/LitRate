@@ -1,0 +1,26 @@
+.navbar .navbar-nav .nav-link,
+.navbar .navbar-brand {
+    color: white;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+}
+
+.navigation {
+    background-color: yellow;
+}
+
+.form-control{
+    width: 350px;
+}
+
+.card:hover{
+    transform: scale(1.03);
+    transition: 0.5s;
+}
+
+.search {
+    width: 700px;
+}

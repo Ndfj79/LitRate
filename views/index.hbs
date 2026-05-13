@@ -5,29 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>LitRate Главная</title>
     
-    <link rel="icon" href="./public/assets/icon.png" type="image/png">
+    <link rel="icon" href="./assets/icon.png" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <link rel="stylesheet" href="./public/css/mainpage.css"  type="text/css">
+    <link rel="stylesheet" href="./css/mainpage.css"  type="text/css">
   </head>
   <body>
     <nav class="navbar fixed-top  navbar-expand-lg bg-primary navbar-dark">
       <div class="container-fluid ">
-        <img src="./public/assets/icon.png" width="35px" alt="">
-        <a class="navbar-brand px-1" href="#"><h3>LitRate</h3></a>
+        <img src="./assets/icon.png" width="35px" alt="">
+        <a class="navbar-brand px-1" href="/"><h3>LitRate</h3></a>
         
         <div class="collapse navbar-collapse " id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Авторы</a>
+              <a class="nav-link active" aria-current="page" href="/findAuthor">Авторы</a>
             </li>
             <li class="nav-item ">
-              <a class="nav-link" href="#">Жанры</a>
+              <a class="nav-link" href="/genres">Жанры</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Полки</a>
+              <a class="nav-link" href="/bookshelves">Полки</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Рецензии</a>
+              <a class="nav-link" href="/reviews">Рецензии</a>
             </li>
           </ul>
           <form class="d-flex" role="search">
@@ -36,9 +36,9 @@
           </form>
         </div>
         <div class="collapse navbar-collapse d-flex justify-content-end" >
-          <a class="nav-link px-3 text-light" href="#">Войти
+          <a class="nav-link px-3 text-light" href="/login">Войти
           </a>
-          <img src="./public/assets/profile.png" alt="" class="rounded-circle " style="width: 40px; height: 40px;">
+          <img src="./assets/profile.png" alt="" class="rounded-circle " style="width: 40px; height: 40px;">
         </div>
           
       </div>
@@ -48,64 +48,33 @@
         <p class="fs-1 fw-semibold pt-3">Все книги</p>
       </div>
       <div class="btn-group d-flex ">
-        <a href="#" class="btn btn-primary">Фентези</a>
-        <a href="#" class="btn btn-primary">Драма</a>
-        <a href="#" class="btn btn-primary">Детективы</a>
-        <a href="#" class="btn btn-primary">Классика</a>
-        <a href="#" class="btn btn-primary">Хорроры</a>
-        <a href="#" class="btn btn-primary">Проза</a>
-        <a href="#" class="btn btn-primary">Психология</a>
-        <a href="#" class="btn btn-primary">Романтика</a>
+        <a href="/genres" class="btn btn-primary">Фентези</a>
+        <a href="/genres" class="btn btn-primary">Драма</a>
+        <a href="/genres" class="btn btn-primary">Детективы</a>
+        <a href="/genres" class="btn btn-primary">Классика</a>
+        <a href="/genres" class="btn btn-primary">Хорроры</a>
+        <a href="/genres" class="btn btn-primary">Проза</a>
+        <a href="/genres" class="btn btn-primary">Психология</a>
+        <a href="/genres" class="btn btn-primary">Романтика</a>
       </div>
+
       <div class="d-inline-flex">
         <p class="fs-3 fw-semibold">Вам может понравиться</p>
       </div>
-      <div class="cards-recomendation d-flex gap-3 py-2">
+
+      <div class=" cards-recomendation d-flex gap-3 py-2">
+        {{#each books}}
         <div class="card  bg-primary text-light" style="width: 18rem;">
-          <a href="" class="no-decoration">
-            <img src="./public/assets/book-cover.png" class="card-img-top object-fit-none" >
+          <a href="/book" class="no-decoration">
+            <img src="./assets/book-cover.png" class="card-img-top object-fit-none" >
             <div class="card-body ">
-              <h5 class="card-title">Убить пересмешника</h5>
-              <p class="card-text">Харпер Ли</p>
+              <h5 class="card-title">{{this.title}}</h5>
+              <p class="card-text">{{this.author}}</p>
             </div>
           </a>
         </div>
-        <div class="card bg-primary text-light" style="width: 18rem;">
-          <a href="" class="no-decoration">
-            <img src="./public/assets/book-cover2.png" class="card-img-top object-fit-none" >
-            <div class="card-body ">
-              <h5 class="card-title">Убить пересмешника</h5>
-              <p class="card-text">Харпер Ли</p>
-            </div>
-          </a>
-        </div>
-        <div class="card bg-primary text-light" style="width: 18rem;">
-          <a href="" class="no-decoration">
-            <img src="./public/assets/book-cover.png" class="card-img-top object-fit-none" >
-            <div class="card-body ">
-              <h5 class="card-title">Убить пересмешника</h5>
-              <p class="card-text">Харпер Ли</p>
-            </div>
-          </a>
-        </div>
-        <div class="card bg-primary text-light" style="width: 18rem;">
-          <a href="" class="no-decoration">
-            <img src="./public/assets/book-cover.png" class="card-img-top object-fit-none" >
-            <div class="card-body ">
-              <h5 class="card-title">Убить пересмешника</h5>
-              <p class="card-text">Харпер Ли</p>
-            </div>
-          </a>
-        </div>
-        <div class="card bg-primary text-light" style="width: 18rem;">
-          <a href="" class="no-decoration">
-            <img src="./public/assets/book-cover.png" class="card-img-top object-fit-none" >
-            <div class="card-body ">
-              <h5 class="card-title">Убить пересмешника</h5>
-              <p class="card-text">Харпер Ли</p>
-            </div>
-          </a>
-        </div>
+        {{/each}}
+
       </div>
 
 
@@ -117,7 +86,7 @@
       <div class="cards-by-author d-flex gap-3 ">
         <div class="card  bg-primary text-light" style="width: 18rem;">
           <a href="" class="no-decoration">
-            <img src="./public/assets/book-cover.png" class="card-img-top object-fit-none" >
+            <img src="./assets/book-cover.png" class="card-img-top object-fit-none" >
             <div class="card-body ">
               <h5 class="card-title">Убить пересмешника</h5>
               <p class="card-text">Харпер Ли</p>
@@ -126,7 +95,7 @@
         </div>
         <div class="card bg-primary text-light" style="width: 18rem;">
           <a href="" class="no-decoration">
-            <img src="./public/assets/book-cover.png" class="card-img-top object-fit-none" >
+            <img src="./assets/book-cover.png" class="card-img-top object-fit-none" >
             <div class="card-body ">
               <h5 class="card-title">Убить пересмешника</h5>
               <p class="card-text">Харпер Ли</p>
@@ -135,7 +104,7 @@
         </div>
         <div class="card bg-primary text-light" style="width: 18rem;">
           <a href="" class="no-decoration">
-            <img src="./public/assets/book-cover.png" class="card-img-top object-fit-none" >
+            <img src="./assets/book-cover.png" class="card-img-top object-fit-none" >
             <div class="card-body ">
               <h5 class="card-title">Убить пересмешника</h5>
               <p class="card-text">Харпер Ли</p>
@@ -144,7 +113,7 @@
         </div>
         <div class="card bg-primary text-light" style="width: 18rem;">
           <a href="" class="no-decoration">
-            <img src="./public/assets/book-cover.png" class="card-img-top object-fit-none" >
+            <img src="./assets/book-cover.png" class="card-img-top object-fit-none" >
             <div class="card-body ">
               <h5 class="card-title">Убить пересмешника</h5>
               <p class="card-text">Харпер Ли</p>
@@ -153,7 +122,7 @@
         </div>
         <div class="card bg-primary text-light" style="width: 18rem;">
           <a href="" class="no-decoration">
-            <img src="./public/assets/book-cover.png" class="card-img-top object-fit-none" >
+            <img src="./assets/book-cover.png" class="card-img-top object-fit-none" >
             <div class="card-body ">
               <h5 class="card-title">Убить пересмешника</h5>
               <p class="card-text">Харпер Ли</p>
@@ -171,7 +140,7 @@
       <div class="cards-new d-flex gap-3 pb-5">
         <div class="card  bg-primary text-light" style="width: 18rem;">
           <a href="" class="no-decoration">
-            <img src="./public/assets/book-cover.png" class="card-img-top object-fit-none" >
+            <img src="./assets/book-cover.png" class="card-img-top object-fit-none" >
             <div class="card-body ">
               <h5 class="card-title">Убить пересмешника</h5>
               <p class="card-text">Харпер Ли</p>
@@ -180,7 +149,7 @@
         </div>
         <div class="card bg-primary text-light" style="width: 18rem;">
           <a href="" class="no-decoration">
-            <img src="./public/assets/book-cover.png" class="card-img-top object-fit-none" >
+            <img src="./assets/book-cover.png" class="card-img-top object-fit-none" >
             <div class="card-body ">
               <h5 class="card-title">Убить пересмешника</h5>
               <p class="card-text">Харпер Ли</p>
@@ -189,7 +158,7 @@
         </div>
         <div class="card bg-primary text-light" style="width: 18rem;">
           <a href="" class="no-decoration">
-            <img src="./public/assets/book-cover.png" class="card-img-top object-fit-none" >
+            <img src="./assets/book-cover.png" class="card-img-top object-fit-none" >
             <div class="card-body ">
               <h5 class="card-title">Убить пересмешника</h5>
               <p class="card-text">Харпер Ли</p>
@@ -198,7 +167,7 @@
         </div>
         <div class="card bg-primary text-light" style="width: 18rem;">
           <a href="" class="no-decoration">
-            <img src="./public/assets/book-cover.png" class="card-img-top object-fit-none" >
+            <img src="./assets/book-cover.png" class="card-img-top object-fit-none" >
             <div class="card-body ">
               <h5 class="card-title">Убить пересмешника</h5>
               <p class="card-text">Харпер Ли</p>
@@ -207,7 +176,7 @@
         </div>
         <div class="card bg-primary text-light" style="width: 18rem;">
           <a href="" class="no-decoration">
-            <img src="./public/assets/book-cover.png" class="card-img-top object-fit-none" >
+            <img src="./assets/book-cover.png" class="card-img-top object-fit-none" >
             <div class="card-body ">
               <h5 class="card-title">Убить пересмешника</h5>
               <p class="card-text">Харпер Ли</p>
@@ -223,7 +192,7 @@
         <p class="col-md-4 mb-0 text-body-secondary">© 2026, КФ МГТУ им. Н.Э. Баумана, ИУК6-21</p>
 
         <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-          <img src="./public/assets/icon.png" width="40px" alt="">
+          <img src="./assets/icon.png" width="40px" alt="">
         </a>
 
         <p class="col-md-2 mb-0 text-body-secondary">Made by <br> Кирсанов Егор(Ndfj79) <br>  Лескин Евгений(lesochkin)<br>  Полина Коряева(bitterilyyy)</p>

@@ -1,13 +1,13 @@
 const express = require("express");
-const { engine } = require('express-handlebars');
+const { engine } = require('hbs');
 const app = express();
-const port = 3000;
+const port = 8000;
 
 app.use(express.json());
 app.use(express.static("public"));
 
-app.engine('handlebars', engine());
-app.set('view engine', 'handlebars');
+
+app.set('view engine', 'hbs');
 
 
 var index = require("./routes/index");
@@ -27,7 +27,7 @@ var userAccount = require("./routes/userAccount");
 app.use('/', index);
 app.use('/book', book);
 app.use('/bookshelf', bookshelf);
-app.use('/bookshelfs', bookshelfs);
+app.use('/bookshelves', bookshelfs);
 app.use('/findAuthor', findAuthor);
 app.use('/findUser', findUser);
 app.use('/genres', genres);

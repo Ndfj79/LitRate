@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
 
 const bookSchema = new mongoose.Schema({
-    key:{type: String, required: true, unique: true},
-    title:{type: String, required: true},
-    authors:[{type: mongoose.Schema.Types.ObjectId, ref: 'Author'}],
+    _id:{type: String, required: true, unique: true},
     isbn:{type: String,sparse: true},
-    year:{type: Number,sparse: true},
-    genres:[{type: mongoose.Schema.Types.ObjectId, ref: 'Genre'}],
-    cover:{type:String}
+    author_ids:[{type: mongoose.Schema.Types.ObjectId, ref: 'Author'}],
+    cover_id:{type: mongoose.Schema.Types.ObjectId, ref: 'Cover'},
+    genre_ids:[{type: mongoose.Schema.Types.ObjectId, ref: 'Genre'}],
+    title:{type: String, required: true},
+    year:{type: Number,sparse: true}
 }, { timestamps: true , collection: 'booksLIB' });
 
 const Book = mongoose.model('Book', bookSchema);

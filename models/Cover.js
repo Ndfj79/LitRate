@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const coverSchema = new mongoose.Schema({
-    key:{type: String, required: true, unique: true},
-    name:{type: String},
+    _id:{type: String, required: true, unique: true},
+    url:{type: String},
 }, { timestamps: true , collection: 'CoversLIB' });
 
 const Cover = mongoose.model('Cover', authorSchema);

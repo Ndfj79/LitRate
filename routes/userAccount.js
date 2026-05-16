@@ -1,8 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-router.get("/", (req, res) => {
-    res.send("Это личная страница пользователя!");
+
+router.get("/", async (req, res) => {
+    
+    res.render("../views/profile.hbs", {});
+
 });
 
 module.exports = router

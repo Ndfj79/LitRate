@@ -5,44 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>LitRate Полки</title>
     
-    <link rel="icon" href="./public/assets/icon.png" type="image/png">
+    <link rel="icon" href="./assets/icon.png" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <link rel="stylesheet" href="./public/css/mainpage.css"  type="text/css">
+    <link rel="stylesheet" href="./css/mainpage.css"  type="text/css">
   </head>
 <body>
-    <nav class="navbar fixed-top navbar-expand-lg bg-primary navbar-dark">
-      <div class="container-fluid ">
-        <img src="./public/assets/icon.png" width="35px" alt="">
-        <a class="navbar-brand px-1" href="#"><h3>LitRate</h3></a>
-        
-        <div class="collapse navbar-collapse " id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Авторы</a>
-            </li>
-            <li class="nav-item ">
-              <a class="nav-link" href="#">Жанры</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Полки</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Рецензии</a>
-            </li>
-          </ul>
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Поиск по названию или ISBN" aria-label="Поиск">
-            <button class="btn btn-outline-light" type="submit">Поиск</button>
-          </form>
-        </div>
-        <div class="collapse navbar-collapse d-flex justify-content-end" >
-          <a class="nav-link px-3 text-light" href="#">Войти
-          </a>
-          <img src="./public/assets/profile.png" alt="" class="rounded-circle " style="width: 40px; height: 40px;">
-        </div>
-          
+  <nav class="navbar fixed-top navbar-expand-lg bg-primary navbar-dark">
+    <div class="container-fluid ">
+      <img src="./assets/icon.png" width="35px" alt="">
+      <a class="navbar-brand px-1" href="/"><h3>LitRate</h3></a>
+      
+      <div class="collapse navbar-collapse " id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/findAuthor">Авторы</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="/genres">Жанры</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/bookshelves">Полки</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/reviews">Рецензии</a>
+          </li>
+        </ul>
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Поиск по названию или ISBN" aria-label="Поиск">
+          <button class="btn btn-outline-light" type="submit">Поиск</button>
+        </form>
       </div>
-    </nav>
+      <div class="collapse navbar-collapse d-flex justify-content-end" >
+        <a class="nav-link px-3 text-light" href="/signin">Войти
+        </a>
+        <img src="/assets/profile.png" alt="" class="rounded-circle " style="width: 40px; height: 40px;">
+      </div>
+        
+    </div>
+  </nav>
     <div class="container">
 
 
@@ -60,7 +60,7 @@
             </div>
             <div class="">
               <a href="#">
-                <img class="like" src="./public/assets/unlike.png" width='25px' />
+                <img class="like" src="./assets/unlike.png" width='25px' />
                 <span class="badge bg-primary rounded-pill">14</span>
               </a>
             </div>
@@ -74,7 +74,7 @@
             </div>
             <div class="">
               <a href="#">
-                <img class="like" src="./public/assets/unlike.png" width='25px' />
+                <img class="like" src="./assets/unlike.png" width='25px' />
                 <span class="badge bg-primary rounded-pill">14</span>
               </a>
             </div>
@@ -88,7 +88,7 @@
             </div>
             <div class="">
               <a href="#">
-                <img class="like" src="./public/assets/unlike.png" width='25px' />
+                <img class="like" src="./assets/unlike.png" width='25px' />
                 <span class="badge bg-primary rounded-pill">14</span>
               </a>
             </div>
@@ -102,7 +102,7 @@
             </div>
             <div class="">
               <a href="#">
-                <img class="like" src="./public/assets/unlike.png" width='25px' />
+                <img class="like" src="./assets/unlike.png" width='25px' />
                 <span class="badge bg-primary rounded-pill">14</span>
               </a>
             </div>
@@ -116,7 +116,7 @@
             </div>
             <div class="">
               <a href="#">
-                <img class="like" src="./public/assets/unlike.png" width='25px' />
+                <img class="like" src="./assets/unlike.png" width='25px' />
                 <span class="badge bg-primary rounded-pill">14</span>
               </a>
             </div>
@@ -130,7 +130,7 @@
             </div>
             <div class="">
               <a href="#">
-                <img class="like" src="./public/assets/unlike.png" width='25px' />
+                <img class="like" src="./assets/unlike.png" width='25px' />
                 <span class="badge bg-primary rounded-pill">14</span>
               </a>
             </div>
@@ -147,7 +147,7 @@
         <p class="col-md-4 mb-0 text-body-secondary">© 2026, КФ МГТУ им. Н.Э. Баумана, ИУK6-21</p>
 
         <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-          <img src="./public/assets/icon.png" width="40px" alt="">
+          <img src="./assets/icon.png" width="40px" alt="">
         </a>
 
         <p class="col-md-2 mb-0 text-body-secondary">Made by <br> Кирсанов Егор(Ndfj79) <br>  Лескин Евгений(lesochkin)<br>  Полина Коряева(bitterilyyy)</p>

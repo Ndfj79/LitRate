@@ -1,8 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-router.get("/", (req, res) => {
-    res.send("это страница на которой можно найти автора книги");
+
+router.get("/", async (req, res) => {
+    
+    res.render("../views/authors.hbs", {});
+
 });
 
 module.exports = router

@@ -1,8 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-router.get("/", (req, res) => {
-    res.send("Это страница на которой представлены популярные книжные полки");
+
+router.get("/", async (req, res) => {
+    
+    res.render("../views/bookshelves.hbs", {});
+
 });
 
 module.exports = router

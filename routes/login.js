@@ -1,8 +1,13 @@
 const express = require("express");
 const router = express.Router();
+const {login} = require("../controllers/userController");
 
-router.get("/", (req, res) => {
-    res.send("Это страница с авторизацией пользователя!");
+router.get("/", async (req, res) => {
+    
+    res.render("../views/signin.hbs", {});
+
 });
 
-module.exports = router
+router.post("/", login);
+
+module.exports = router;

@@ -60,10 +60,21 @@ exports.login = async (req, res) => {
             { expiresIn: "1h" }
         );
 
-        return res.redirect("/");
+        res.cookie('token', token, {
+            httpOnly: true,
+            sameSite: 'strict',
+            maxAge: 3600000
+        });
+        res.cookie('mail', user.mail, {
+            httpOnly: true,
+            sameSite: 'strict',
+            maxAge: 3600000
+        });
+
+        res.redirect('/');
     } catch (error) {
         console.error("Ошибка при входе пользователя:", error);
         return res.status(500).json({ message: "Ошибка сервера" });
-
+        
     }
 }

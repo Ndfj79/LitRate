@@ -8,32 +8,28 @@ const User = require('../models/user');
 const Rate = require('../models/Rate');
 const Genre = require('../models/Genre');
 const {verifyToken} = require('../controllers/isAuth');
+const {reduceAuthors} = require('../controllers/reduceAuthors');
 
-
-function reduceAuthors(books){
-        var authors = [];
-        for (let i=0; i<5; i++){
-            if (books[i].author_ids.length > 1){
-                authors.push(books[i].author_ids[0].name + " и др.");
-                books[i].author_ids.name = books[i].author_ids[0].name + " и др.";   
-            }
-            else{
-                authors.push( books[i].author_ids[0].name);
-                books[i].author_ids.name = books[i].author_ids[0].name;
-            }
-
-        }
-        return books;
-}
 
 
 router.get("/", verifyToken, async (req, res) => {
     if (req.user == "No-user"){
-        const books = await Book.find({}).limit(5).sort({rate_count: 1}).populate('author_ids').populate('cover_id');  
-        res.render("../views/index.hbs", {books:books});
+        var isUser = false;
+        var newBooks = await Book.find({}).sort({year: 1}).limit(5).populate('author_ids').populate('cover_id');
+        var books = await Book.find({}).limit(5).sort({rate_count: 1}).populate('author_ids').populate('cover_id');  
+
+        newBooks = reduceAuthors(newBooks);
+        books = reduceAuthors(books);
+        res.render("../views/index.hbs", 
+        {
+            newBooks: newBooks,
+            genreBooks: books,
+            authorBooks: books, 
+        });
     }
     else
     {
+        var isUser = true;
         const user = await User.findOne({mail: req.cookies.mail});
         const userRates = await Rate.find({user_id: user._id});
 
@@ -46,23 +42,32 @@ router.get("/", verifyToken, async (req, res) => {
             genres.push(commentedBooks[i].genre_ids[0]._id);
         }
 
-        var recBooksAuthor = await Book.find({author_ids: commentedBooks.author_ids}).populate('cover_id').populate('author_ids').limit(5);
+        var recBooksAuthor = await Book.find({author_ids: commentedBooks[0].author_ids}).populate('cover_id').populate('author_ids').limit(5);
 
-        console.log(recBooksAuthor);
+        var recBooksAuthor = [];
+        for (let i=0; i<commentedBooks.length; i++){
+            recBooksAuthor.push( await Book.findOne({author_ids: commentedBooks[i].author_ids}).populate('cover_id').populate('author_ids'));
+        }
+
         for (let i=0; i<commentedBooks.length; i++){
             commentedBooks[i] = commentedBooks[i]._id;
         }
 
-
         var newBooks = await Book.find({}).sort({year: 1}).limit(5).populate('author_ids').populate('cover_id');
-        var recBooksGenre = await Book.find({genre_ids: genres, _id: {$nin : commentedBooks}}).populate('genre_ids').populate('cover_id').populate('author_ids').limit(5);
-        var books = await Book.find({}).limit(5).sort({rate_count: 1}).populate('author_ids').populate('cover_id');  
+        var recBooksGenre = await Book.find({genre_ids: genres, _id: {$nin : commentedBooks}}).populate('genre_ids').populate('cover_id').populate('author_ids').limit(5);  
 
-        books = reduceAuthors(books);
         recBooksGenre = reduceAuthors(recBooksGenre);
+        recBooksAuthor = reduceAuthors(recBooksAuthor);
+        newBooks = reduceAuthors(newBooks);
 
-
-        res.render("../views/index.hbs", {newBooks: newBooks, genreBooks: recBooksGenre, authorBooks: recBooksAuthor});
+        res.render("../views/index.hbs", 
+            {
+            newBooks: newBooks,
+            genreBooks: recBooksGenre,
+            authorBooks: recBooksAuthor, 
+            isUser: isUser,
+            user: user
+        });
     }
 });
 

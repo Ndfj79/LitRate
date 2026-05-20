@@ -31,34 +31,28 @@
               <a class="nav-link" href="/reviews">Рецензии</a>
             </li>
           </ul>
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Поиск по названию или ISBN" aria-label="Поиск">
+          <form class="d-flex" action="/search" method="POST" role="search">
+            <input class="form-control me-2" name="searchText" required type="search" placeholder="Поиск по названию или ISBN" aria-label="Поиск">
             <button class="btn btn-outline-light" type="submit">Поиск</button>
           </form>
         </div>
-        <div class="collapse navbar-collapse d-flex justify-content-end" >
-          <a class="nav-link px-3 text-light" href="/signin">Войти
-          </a>
-          <img src="./assets/profile.png" alt="" class="rounded-circle " style="width: 40px; height: 40px;">
-        </div>
+        {{#if isUser}}
+          <div class="collapse navbar-collapse d-flex justify-content-end" >
+            <a class="nav-link px-3 text-light fs-3" href="/profile?id={{user._id}}">{{user.login}}</a>
+          </div>
+        {{else}}
+          <div class="collapse navbar-collapse d-flex justify-content-end" >
+            <a class="nav-link px-3 text-light" href="/signin">Войти</a>
+          </div>
+        {{/if}}
           
       </div>
     </nav>
     <div class="container">
-      <div class="d-inline-flex pt-5">
-        <p class="fs-1 fw-semibold pt-3">Все книги</p>
+      <div class="d-flex pt-5">
+        <p class="fs-1 fw-semibold pt-3">Добро пожаловать!</p>
       </div>
-      <div class="btn-group d-flex ">
-        <a href="/genres" class="btn btn-primary">Фентези</a>
-        <a href="/genres" class="btn btn-primary">Драма</a>
-        <a href="/genres" class="btn btn-primary">Детективы</a>
-        <a href="/genres" class="btn btn-primary">Классика</a>
-        <a href="/genres" class="btn btn-primary">Хорроры</a>
-        <a href="/genres" class="btn btn-primary">Проза</a>
-        <a href="/genres" class="btn btn-primary">Психология</a>
-        <a href="/genres" class="btn btn-primary">Романтика</a>
-      </div>
-
+      
       <div class="d-inline-flex">
         <p class="fs-3 fw-semibold">Вам может понравиться</p>
       </div>
@@ -66,7 +60,7 @@
       <div class=" cards-recomendation d-flex gap-3 py-2">
         {{#each genreBooks}}
         <div class="card bg-primary text-light " style="width: 18rem;">
-          <a href="/book" class="no-decoration ">
+          <a href="/book?bid={{this._id}}" class="no-decoration ">
             <img src="/proxy/image?url=https://libmir.com{{this.cover_id.url}}" crossorigin="anonymous" height="350px" class="card-img-top" >
             <div class="card-body d-flex flex-column justify-content-between">
               <h5 class="card-title">{{this.title}}</h5>
@@ -89,7 +83,7 @@
       <div class=" cards-recomendation d-flex gap-3 py-2">
         {{#each authorBooks}}
         <div class="card bg-primary text-light " style="width: 18rem;">
-          <a href="/book" class="no-decoration ">
+          <a href="/book?bid={{this._id}}" class="no-decoration ">
             <img src="/proxy/image?url=https://libmir.com{{this.cover_id.url}}" crossorigin="anonymous" height="350px" class="card-img-top" >
             <div class="card-body d-flex flex-column justify-content-between">
               <h5 class="card-title">{{this.title}}</h5>
@@ -111,7 +105,7 @@
       <div class=" cards-recomendation d-flex gap-3 py-2">
         {{#each newBooks}}
         <div class="card bg-primary text-light " style="width: 18rem;">
-          <a href="/book" class="no-decoration ">
+          <a href="/book?bid={{this._id}}" class="no-decoration ">
             <img src="/proxy/image?url=https://libmir.com{{this.cover_id.url}}" crossorigin="anonymous" height="350px" class="card-img-top" >
             <div class="card-body d-flex flex-column justify-content-between">
               <h5 class="card-title">{{this.title}}</h5>

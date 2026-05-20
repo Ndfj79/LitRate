@@ -34,7 +34,7 @@ var registration = require("./routes/registration");
 var reviews = require("./routes/reviews");
 var userAccount = require("./routes/userAccount");
 var userRouter = require("./routes/userRouter");
-
+var search = require("./routes/search");
 
 app.use('/', index);
 app.use('/book', book);
@@ -47,8 +47,9 @@ app.use('/signin', login);
 app.use('/newBooks', newBooks);
 app.use('/signup', registration);
 app.use('/reviews', reviews);
-app.use('/userAccount', userAccount);
+app.use('/profile', userAccount);
 app.use('/api/v1/user', userRouter);
+app.use('/search', search);
 
 
 app.get('/proxy/image', async (req, res) => {

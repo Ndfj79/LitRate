@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="./css/mainpage.css"  type="text/css">
   </head>
 <body>
-    <nav class="navbar fixed-top navbar-expand-lg bg-primary navbar-dark">
+    <nav class="navbar fixed-top  navbar-expand-lg bg-primary navbar-dark">
       <div class="container-fluid ">
         <img src="./assets/icon.png" width="35px" alt="">
         <a class="navbar-brand px-1" href="/"><h3>LitRate</h3></a>
@@ -30,16 +30,20 @@
               <a class="nav-link" href="/reviews">Рецензии</a>
             </li>
           </ul>
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Поиск по названию или ISBN" aria-label="Поиск">
+          <form class="d-flex" action="/search" method="POST" role="search">
+            <input class="form-control me-2" name="searchText" required type="search" placeholder="Поиск по названию или ISBN" aria-label="Поиск">
             <button class="btn btn-outline-light" type="submit">Поиск</button>
           </form>
         </div>
-        <div class="collapse navbar-collapse d-flex justify-content-end" >
-          <a class="nav-link px-3 text-light" href="/signin">Войти
-          </a>
-          <img src="/assets/profile.png" alt="" class="rounded-circle " style="width: 40px; height: 40px;">
-        </div>
+        {{#if isUser}}
+          <div class="collapse navbar-collapse d-flex justify-content-end" >
+            <a class="nav-link px-3 text-light fs-3" href="/profile?id={{user._id}}">{{user.login}}</a>
+          </div>
+        {{else}}
+          <div class="collapse navbar-collapse d-flex justify-content-end" >
+            <a class="nav-link px-3 text-light" href="/signin">Войти</a>
+          </div>
+        {{/if}}
           
       </div>
     </nav>

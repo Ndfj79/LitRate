@@ -10,36 +10,40 @@
     <link rel="stylesheet" href="./public/css/mainpage.css"  type="text/css">
   </head>
 <body>
-    <nav class="navbar fixed-top navbar-expand-lg bg-primary navbar-dark">
+    <nav class="navbar fixed-top  navbar-expand-lg bg-primary navbar-dark">
       <div class="container-fluid ">
-        <img src="./public/assets/icon.png" width="35px" alt="">
-        <a class="navbar-brand px-1" href="#"><h3>LitRate</h3></a>
+        <img src="./assets/icon.png" width="35px" alt="">
+        <a class="navbar-brand px-1" href="/"><h3>LitRate</h3></a>
         
         <div class="collapse navbar-collapse " id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Авторы</a>
+              <a class="nav-link active" aria-current="page" href="/findAuthor">Авторы</a>
             </li>
             <li class="nav-item ">
-              <a class="nav-link" href="#">Жанры</a>
+              <a class="nav-link" href="/genres">Жанры</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Полки</a>
+              <a class="nav-link" href="/bookshelves">Полки</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Рецензии</a>
+              <a class="nav-link" href="/reviews">Рецензии</a>
             </li>
           </ul>
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Поиск по названию или ISBN" aria-label="Поиск">
+          <form class="d-flex" action="/search" method="POST" role="search">
+            <input class="form-control me-2" name="searchText" required type="search" placeholder="Поиск по названию или ISBN" aria-label="Поиск">
             <button class="btn btn-outline-light" type="submit">Поиск</button>
           </form>
         </div>
-        <div class="collapse navbar-collapse d-flex justify-content-end" >
-          <a class="nav-link px-3 text-light" href="#">Войти
-          </a>
-          <img src="./public/assets/profile.png" alt="" class="rounded-circle " style="width: 40px; height: 40px;">
-        </div>
+        {{#if isUser}}
+          <div class="collapse navbar-collapse d-flex justify-content-end" >
+            <a class="nav-link px-3 text-light fs-3" href="/profile?id={{user._id}}">{{user.login}}</a>
+          </div>
+        {{else}}
+          <div class="collapse navbar-collapse d-flex justify-content-end" >
+            <a class="nav-link px-3 text-light" href="/signin">Войти</a>
+          </div>
+        {{/if}}
           
       </div>
     </nav>

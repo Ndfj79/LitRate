@@ -8,4 +8,11 @@ router.get("/", async (req, res) => {
 
 });
 
+router.post("/", async (req, res) => {
+    
+    res.render("../views/bookshelves.hbs", {});
+
+});
+
+
 module.exports = router

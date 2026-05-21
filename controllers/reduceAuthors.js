@@ -9,7 +9,6 @@ function reduceAuthors(books){
                 authors.push( books[i].author_ids[0].name);
                 books[i].author_ids.name = books[i].author_ids[0].name;
             }
-
         }
         return books;
 }

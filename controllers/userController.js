@@ -4,7 +4,6 @@ const User = require("../models/user");
 
 exports.signUp = async (req, res) => {
     try{
-        console.log(req.body)
         const { login, mail, password } = req.body;
 
         if (!mail || !login || !password) {
@@ -27,10 +26,10 @@ exports.signUp = async (req, res) => {
 
         await newUser.save();
 
-        return res.status(201).json({ message: "Пользователь успешно зарегистрирован" });
+        return res.redirect('/');
     } catch (error) {
         console.error("Ошибка при регистрации пользователя:", error);
-        return res.status(500).json({ message: "Ошибка сервера" });
+        return res.redirect("/");
     }
 }
 

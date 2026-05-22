@@ -52,7 +52,8 @@
       <div class="d-flex pt-5">
         <p class="fs-1 fw-semibold pt-3">Добро пожаловать!</p>
       </div>
-      
+      {{#if isCommentedBooks}}
+
       <div class="d-inline-flex">
         <p class="fs-3 fw-semibold">Вам может понравиться</p>
       </div>
@@ -73,16 +74,16 @@
         {{/each}}
 
       </div>
-
-      {{#if isUser}}
-      <div class="d-inline-flex pt-4 pb-2">
-        <p class="fs-3 fw-semibold">От автора, который вам нравится</p>
-      </div>
-      {{else}}
-      <div class="d-inline-flex pt-4 pb-2">
-        <p class="fs-3 fw-semibold">Популярное</p>
-      </div>
-      {{/if}}
+      
+        {{#if isUser}}
+        <div class="d-inline-flex pt-4 pb-2">
+          <p class="fs-3 fw-semibold">От автора, который вам нравится</p>
+        </div>
+        {{else}}
+        <div class="d-inline-flex pt-4 pb-2">
+          <p class="fs-3 fw-semibold">Популярное</p>
+        </div>
+        {{/if}}
 
       <div class=" cards-recomendation d-flex gap-3 py-2">
         {{#each authorBooks}}
@@ -100,6 +101,7 @@
         {{/each}}
 
       </div>
+      {{/if}}
 
       <div class="d-inline-flex pt-4 pb-2">
         <p class="fs-3 fw-semibold">Самое свежее</p>

@@ -59,9 +59,13 @@ router.get("/", verifyToken, async (req, res) => {
 
         var newBooks = await Book.find({}).sort({year: 1}).limit(5).populate('author_ids').populate('cover_id');
         var recBooksGenre = await Book.find({genre_ids: {$in: genres}, _id: {$nin : commentedBooks}}).populate('cover_id').populate('author_ids').limit(5);  
-        
-        recBooksGenre = reduceAuthors(recBooksGenre);
-        recBooksAuthor = reduceAuthors(recBooksAuthor);
+        var isCommentedBooks = false;
+        if (commentedBooks.length != 0){
+            isCommentedBooks = true;   
+            recBooksGenre = reduceAuthors(recBooksGenre);
+            recBooksAuthor = reduceAuthors(recBooksAuthor);
+        }
+
         newBooks = reduceAuthors(newBooks);
 
         res.render("../views/index.hbs", 
@@ -70,7 +74,8 @@ router.get("/", verifyToken, async (req, res) => {
             genreBooks: recBooksGenre,
             authorBooks: recBooksAuthor, 
             isUser: isUser,
-            user: user
+            user: user,
+            isCommentedBooks: isCommentedBooks
         });
     }
 });

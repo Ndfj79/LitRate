@@ -56,7 +56,7 @@ exports.login = async (req, res) => {
             {
                 userId: user._id, login: user.login, mail: user.mail
             },
-            "1234!@#%@#!@${}SA",
+            process.env.JWT_KEY,
             { expiresIn: "1h" }
         );
 

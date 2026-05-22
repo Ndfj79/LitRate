@@ -58,27 +58,41 @@ router.post("/", async (req, res) => {
 router.get("/like", async (req, res) => {
     var id = req.query.id;
     const user = await User.findOne({mail: req.cookies.mail});
-
     var bookshelf = await Bookshelf.findOne({_id: id});
-    bookshelf.like_count += 1;
-    bookshelf.liked_users.push(user._id);
 
-    bookshelf.save()
-    res.redirect("/bookshelves");
+    if (req.cookies.mail){
+        if (bookshelf.liked_users.includes(user._id)){
+            res.redirect("/bookshelves");
+        }
+        else{
+            bookshelf.like_count += 1;
+            bookshelf.liked_users.push(user._id);
+
+            bookshelf.save()
+            res.redirect("/bookshelves");
+        }
+    }
 }); 
 
 
 router.get("/unlike", async (req, res) => {
     var id = req.query.id;
     const user = await User.findOne({mail: req.cookies.mail});
-
     var bookshelf = await Bookshelf.findOne({_id: id});
-    bookshelf.like_count -= 1;
-    const index = bookshelf.liked_users.indexOf(user._id);
-    bookshelf.liked_users.splice(index, 1);
 
-    bookshelf.save()
-    res.redirect("/bookshelves");
+    if (req.cookies.mail){
+        if (bookshelf.liked_users.includes(user._id)){
+            bookshelf.like_count -= 1;
+            const index = bookshelf.liked_users.indexOf(user._id);
+            bookshelf.liked_users.splice(index, 1);
+
+            bookshelf.save()
+            res.redirect("/bookshelves");
+        }
+        else{
+            res.redirect("/bookshelves");
+        }
+    }
 }); 
 
 module.exports = router

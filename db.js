@@ -2,7 +2,7 @@ const mongoose =require('mongoose');
 
 const connectToDatabase = async()=>{
     try{
-        await mongoose.connect('mongodb+srv://lesochkek:Parol1234@litrate.1zm7ycw.mongodb.net/CollecLIB');
+        await mongoose.connect(process.env.MONGO_DB_LINK);
         console.log('mongoDB connect successfully');
     }
     catch(error){

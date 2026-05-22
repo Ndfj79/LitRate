@@ -22,10 +22,7 @@ router.get("/", async (req, res) => {
         }
     }
     else{isUser = false;}
-
     res.render("../views/reviews.hbs", {isUser: isUser, user:user, reviews: rates, isPost: isPost});
-
-    
 });
 
 
@@ -59,27 +56,41 @@ router.post("/", async (req, res) => {
 router.get("/like", async (req, res) => {
     var id = req.query.id;
     const user = await User.findOne({mail: req.cookies.mail});
-
     var rate = await Rate.findOne({_id: id});
-    rate.like_count += 1;
-    rate.liked_users.push(user._id);
 
-    rate.save()
-    res.redirect("/reviews");
+    if (req.cookies.mail){
+        if (rate.liked_users.includes(user._id)){
+                res.redirect("/reviews");
+            }
+        else{
+            rate.like_count += 1;
+            rate.liked_users.push(user._id);
+
+            rate.save()
+            res.redirect("/reviews");
+        }
+    }
 }); 
 
 
 router.get("/unlike", async (req, res) => {
     var id = req.query.id;
     const user = await User.findOne({mail: req.cookies.mail});
-
     var rate = await Rate.findOne({_id: id});
-    rate.like_count -= 1;
-    const index = rate.liked_users.indexOf(user._id);
-    rate.liked_users.splice(index, 1);
+    
+    if (req.cookies.mail){
+        if (rate.liked_users.includes(user._id)){
+            rate.like_count -= 1;
+            const index = rate.liked_users.indexOf(user._id);
+            rate.liked_users.splice(index, 1);
 
-    rate.save()
-    res.redirect("/reviews");
+            rate.save()
+            res.redirect("/reviews");
+        }
+        else{
+            res.redirect("/reviews");
+        }
+    }
 }); 
 
 

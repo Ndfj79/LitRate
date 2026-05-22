@@ -4,10 +4,10 @@ const proxy = require('express-http-proxy');
 const session = require('express-session');
 var  dbConnect = require('./db');
 const cookieParser = require('cookie-parser');
+require('dotenv').config({ path: 'secret.env' })
 
 
 const app = express();
-const port = 3000;
 const TIMEOUT_MS = 10000; 
 const MAX_RETRIES = 3;
 
@@ -33,6 +33,8 @@ var reviews = require("./routes/reviews");
 var userAccount = require("./routes/userAccount");
 var userRouter = require("./routes/userRouter");
 var search = require("./routes/search");
+var review = require("./routes/review");
+
 
 app.use('/', index);
 app.use('/book', book);
@@ -46,6 +48,7 @@ app.use('/reviews', reviews);
 app.use('/profile', userAccount);
 app.use('/api/v1/user', userRouter);
 app.use('/search', search);
+app.use('/review', review);
 
 
 app.get('/proxy/image', async (req, res) => {
@@ -54,8 +57,6 @@ app.get('/proxy/image', async (req, res) => {
   if (!imageUrl || !isValidImageUrl(imageUrl)) {
     return res.status(400).json({ error: 'Некорректный или небезопасный URL' });
   }
-
-  // console.log(`[Proxy] Fetching: ${imageUrl}`);
 
   let lastError;
   for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
@@ -83,17 +84,15 @@ app.get('/proxy/image', async (req, res) => {
       clearTimeout(timeoutId);
 
       if (!response.ok) {
-        throw new Error(`Source responded with ${response.status} ${response.statusText}`);
+        throw new Error(`Источник дал ответ с кодом ${response.status} ${response.statusText}`);
       }
 
       const arrayBuffer = await response.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
       const contentType = response.headers.get('content-type') || '';
 
-      // console.log(`[Proxy] Status: ${response.status}, Size: ${buffer.length} bytes, Type: ${contentType}`);
-
       if (buffer.length < 500 || !contentType.startsWith('image/')) {
-        throw new Error(`Invalid image data: size=${buffer.length}, type=${contentType}`);
+        throw new Error(`Неверные данные изображения: size=${buffer.length}, type=${contentType}`);
       }
 
       res.set({
@@ -106,14 +105,13 @@ app.get('/proxy/image', async (req, res) => {
 
     } catch (err) {
       lastError = err;
-      // console.error(`[Proxy] Attempt ${attempt + 1} failed for ${imageUrl}: ${err.message}`);
       if (attempt < MAX_RETRIES) {
         await new Promise(r => setTimeout(r, 500 * (attempt + 1)));
       }
     }
   }
 
-  console.error(`[Proxy] All retries exhausted for ${imageUrl}`);
+  console.error(`[Proxy] Все попытки исчерпаны для  ${imageUrl}`);
   res.status(502).json({
     error: 'Не удалось загрузить изображение после нескольких попыток',
     details: lastError?.message
@@ -136,7 +134,7 @@ function isValidImageUrl(url) {
 }
 
 
-app.listen(port, () => {
-    console.log(`http://localhost:${port}`);
+app.listen(process.env.PORT, () => {
+    console.log(`http://localhost:${process.env.PORT}`);
 });
 

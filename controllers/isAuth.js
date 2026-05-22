@@ -10,7 +10,7 @@ exports.verifyToken = async (req, res, next) => {
       return;
     }
 
-    const decoded = await jwt.verify(token, "1234!@#%@#!@${}SA");
+    const decoded = await jwt.verify(token, process.env.JWT_KEY);
     if (!decoded) {
       throw new Error();
     }

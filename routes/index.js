@@ -41,12 +41,14 @@ router.get("/", verifyToken, async (req, res) => {
         for (let i = 0; i < commentedBooks.length; i++){
             genres.push(commentedBooks[i].genre_ids[0]._id);
         }
-
-        var recBooksAuthor = await Book.find({author_ids: commentedBooks[0].author_ids}).populate('cover_id').populate('author_ids').limit(5);
+        var commentedIds = [];
+        for (let i=0; i<commentedBooks.length; i++){
+            commentedIds.push(commentedBooks[i]._id);
+        }
 
         var recBooksAuthor = [];
         for (let i=0; i<commentedBooks.length; i++){
-            recBooksAuthor.push( await Book.findOne({author_ids: commentedBooks[i].author_ids}).populate('cover_id').populate('author_ids'));
+            recBooksAuthor.push( await Book.findOne({author_ids: {$in :commentedBooks[i].author_ids}, _id: {$nin: commentedIds}}).populate('cover_id').populate('author_ids'));
         }
 
         for (let i=0; i<commentedBooks.length; i++){
@@ -54,8 +56,8 @@ router.get("/", verifyToken, async (req, res) => {
         }
 
         var newBooks = await Book.find({}).sort({year: 1}).limit(5).populate('author_ids').populate('cover_id');
-        var recBooksGenre = await Book.find({genre_ids: genres, _id: {$nin : commentedBooks}}).populate('genre_ids').populate('cover_id').populate('author_ids').limit(5);  
-
+        var recBooksGenre = await Book.find({genre_ids: {$in: genres}, _id: {$nin : commentedBooks}}).populate('cover_id').populate('author_ids').limit(5);  
+        
         recBooksGenre = reduceAuthors(recBooksGenre);
         recBooksAuthor = reduceAuthors(recBooksAuthor);
         newBooks = reduceAuthors(newBooks);

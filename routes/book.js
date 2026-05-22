@@ -27,8 +27,10 @@ router.get("/", async (req, res) => {
     }else{
         bookRate += "/10";
     }
+    var bookshelves = [];
 
     if (req.cookies.mail){
+        bookshelves = await BooksShelf.find({user_id: user._id});
         isUser = true;
         for (let i=0; i<rates.length; i++){
             if (rates[i].liked_users.includes(user._id)){
@@ -41,7 +43,6 @@ router.get("/", async (req, res) => {
     }
     else{isUser = false;}
 
-    var bookshelves = await BooksShelf.find({user_id: user._id});
 
 
     var description = await generateDescription(book.title);

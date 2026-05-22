@@ -30,7 +30,12 @@ router.post("/", async (req, res) => {
     else{
         isUser = false;
     }
-    const { searchText } = req.body;
+    var { searchText } = req.body;
+
+    if (searchText.split().length < 3){
+        searchText = searchText.replace(" ", "  ");
+    }
+
     var author = await Author.find({name: { $regex: searchText, $options: 'i' }});
     var books = await Book.find({author_ids: author[0]._id}).populate('author_ids').populate('cover_id').populate('genre_ids');
     books = reduceAuthors(books);

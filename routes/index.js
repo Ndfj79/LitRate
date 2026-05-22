@@ -49,9 +49,12 @@ router.get("/", verifyToken, async (req, res) => {
         }
 
         var recBooksAuthor = [];
-        for (let i=0; i<commentedBooks.length; i++){
-            recBooksAuthor.push( await Book.findOne({author_ids: {$in :commentedBooks[i].author_ids}, _id: {$nin: commentedIds}}).populate('cover_id').populate('author_ids'));
+            for (let i=0; i<commentedBooks.length; i++){
+                if (await Book.findOne({author_ids: {$in: commentedBooks[i].author_ids}, _id: {$nin: commentedIds}}) != null){
+                    recBooksAuthor.push(await Book.findOne({author_ids: {$in: commentedBooks[i].author_ids}, _id: {$nin: commentedIds}}).populate('cover_id').populate('author_ids'));
+                }
         }
+        
 
         for (let i=0; i<commentedBooks.length; i++){
             commentedBooks[i] = commentedBooks[i]._id;
@@ -60,8 +63,10 @@ router.get("/", verifyToken, async (req, res) => {
         var newBooks = await Book.find({}).sort({year: 1}).limit(5).populate('author_ids').populate('cover_id');
         var recBooksGenre = await Book.find({genre_ids: {$in: genres}, _id: {$nin : commentedBooks}}).populate('cover_id').populate('author_ids').limit(5);  
         var isCommentedBooks = false;
-        if (commentedBooks.length != 0){
-            isCommentedBooks = true;   
+        var isAuthorBooks = false;
+        if (commentedBooks.length != 0 && recBooksAuthor[0] != null){
+            isCommentedBooks = true;
+            isAuthorBooks = true;   
             recBooksGenre = reduceAuthors(recBooksGenre);
             recBooksAuthor = reduceAuthors(recBooksAuthor);
         }
@@ -75,7 +80,8 @@ router.get("/", verifyToken, async (req, res) => {
             authorBooks: recBooksAuthor, 
             isUser: isUser,
             user: user,
-            isCommentedBooks: isCommentedBooks
+            isCommentedBooks: isCommentedBooks,
+            isAuthorBooks: isAuthorBooks
         });
     }
 });

@@ -26,7 +26,7 @@ exports.signUp = async (req, res) => {
 
         await newUser.save();
 
-        return res.redirect('/');
+        return res.redirect('/signin');
     } catch (error) {
         console.error("Ошибка при регистрации пользователя:", error);
         return res.redirect("/");

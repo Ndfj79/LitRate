@@ -5,6 +5,7 @@ const Bookshelf = require("../models/BooksShelf");
 const Rate = require("../models/Rate");
 const Book = require("../models/Book");
 const {generateDescription} = require("../controllers/AIDescriptions");
+const BooksShelf = require("../models/BooksShelf");
 
 
 router.get("/", async (req, res) => {
@@ -40,14 +41,26 @@ router.get("/", async (req, res) => {
     }
     else{isUser = false;}
 
+    var bookshelves = await BooksShelf.find({user_id: user._id});
+
+
     var description = await generateDescription(book.title);
-    res.render("../views/book.hbs", {book:book, isUser:isUser, user:user, bookRate: bookRate, reviews: rates, bookId:bookId, description: description});
+    res.render("../views/book.hbs", {book:book, isUser:isUser, user:user, bookRate: bookRate, reviews: rates, bookId:bookId, description: description, bookshelves: bookshelves});
 });
 
 
 
 router.get("/like", async (req, res) => {
     var id = req.query.id;
+
+    if (req.cookies.mail){
+        isUser = true;
+    }
+    else{
+        res.redirect("/signin");
+        isUser = false;
+    }
+    
     const user = await User.findOne({mail: req.cookies.mail});
     var rate = await Rate.findOne({_id: id});
     if (req.cookies.mail){  
@@ -67,6 +80,15 @@ router.get("/like", async (req, res) => {
 
 router.get("/unlike", async (req, res) => {
     var id = req.query.id;
+
+    if (req.cookies.mail){
+        isUser = true;
+    }
+    else{
+        res.redirect("/signin");
+        isUser = false;
+    }
+
     const user = await User.findOne({mail: req.cookies.mail});
     var rate = await Rate.findOne({_id: id});
 
@@ -88,6 +110,15 @@ router.get("/unlike", async (req, res) => {
 
 router.post("/review", async (req, res) => {
     const user = await User.findOne({mail: req.cookies.mail});
+
+    if (req.cookies.mail){
+        isUser = true;
+    }
+    else{
+        res.redirect("/signin");
+        isUser = false;
+    }
+
     const { textReview } = req.body;
     const { title } = req.body;
     const id = req.query.id;
@@ -95,7 +126,6 @@ router.post("/review", async (req, res) => {
     rate = parseInt(rate);
 
     const urate = await Rate.findOne({user_id: user._id, book_id: id});
-    console.log(urate);
     if (req.cookies.mail){
         try{
             if (urate == [] || urate === null){
@@ -130,6 +160,35 @@ router.post("/review", async (req, res) => {
         res.redirect(`/book?bid=${id}`);
     }
 });
+
+
+router.get("/add", async (req, res) => {
+    var shelfId = req.query.id;
+    var bookId = req.query.bid;
+
+    if (req.cookies.mail){
+        isUser = true;
+    }
+    else{
+        res.redirect("/signin");
+        isUser = false;
+    }
+    
+    const user = await User.findOne({mail: req.cookies.mail});
+    var bookShelf = await BooksShelf.findOne({_id: shelfId});
+    var bookId = await Book.findOne({_id: bookId});
+
+    if (req.cookies.mail){
+        bookShelf.shelf_books.push(bookId._id);
+
+        bookShelf.save()
+        res.redirect(`/book?bid=${req.query.bid}`);
+    }
+    else{
+        res.redirect(`/book?bid=${req.query.bid}`);
+        }
+}); 
+
 
 module.exports = router;
 

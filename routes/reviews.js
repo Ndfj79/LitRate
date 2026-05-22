@@ -55,6 +55,15 @@ router.post("/", async (req, res) => {
 
 router.get("/like", async (req, res) => {
     var id = req.query.id;
+
+    if (req.cookies.mail){
+        isUser = true;
+    }
+    else{
+        res.redirect("/signin");
+        isUser = false;
+    }
+    
     const user = await User.findOne({mail: req.cookies.mail});
     var rate = await Rate.findOne({_id: id});
 
@@ -75,6 +84,14 @@ router.get("/like", async (req, res) => {
 
 router.get("/unlike", async (req, res) => {
     var id = req.query.id;
+    if (req.cookies.mail){
+        isUser = true;
+    }
+    else{
+        res.redirect("/signin");
+        isUser = false;
+    }
+
     const user = await User.findOne({mail: req.cookies.mail});
     var rate = await Rate.findOne({_id: id});
     

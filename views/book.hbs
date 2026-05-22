@@ -63,7 +63,7 @@
                 <h6>Добавить на полку:</h6>
                   {{#each bookshelves}}
                   <div class="btn-group mb-2" role="group" >
-                      <button type="button" class="btn btn-primary"><a href="/book/add?id={{this._id}}bid={{book._id}}" class="text-white text-decoration-none">{{this.shelfname}}</a></button>
+                      <button type="button" class="btn btn-primary"><a href="/book/add?id={{this._id}}&bid={{../bookId}}" class="text-white text-decoration-none">{{this.shelfname}}</a></button>
                   </div>
                   {{/each}}
                 {{/if}}

@@ -62,6 +62,7 @@
             </div>
           </a>
           <div class="">
+            <a href="/profile/bookshelves/del?id={{this._id}}" class="btn btn-danger">Удалить</a>
             {{#if ../isUser}}
               {{#if this.isLiked}}
               <a href="/profile/bookshelves/unlike?id={{this._id}}">
@@ -115,8 +116,15 @@
         </li>
         {{/each}}
       </ul>
+      <form action="/profile/bookshelves" class="mt-3" method="POST">
+        <div class="mb-3">
+            <h5 for="exampleFormControlInput1" class="form-label">Создать полку:</h5>
+            <label for="title" class="form-label">Название Полки:</label>
+            <input type="form-control" id="title" required name="title">
+            <button class="btn btn-primary mt-2" type="submit">Отправить</button>
+        </div>
+      </form>
     </div>
-  </div>
 
 
     <div class="container">

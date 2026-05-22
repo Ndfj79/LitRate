@@ -9,6 +9,14 @@ const Book = require("../models/Book");
 router.get("/", async (req, res) => {
     var isUser;
     const user = await User.findOne({mail: req.cookies.mail});
+    
+    if (req.cookies.mail){
+        isUser = true;
+    }
+    else{
+        res.redirect("/signin");
+        isUser = false;
+    }
 
     var rates = await Rate.find({user_id: user._id});
     var ratedCount = rates.length;
@@ -22,10 +30,6 @@ router.get("/", async (req, res) => {
     middleRate /= rates.length;
     middleRate = middleRate.toFixed(1);
 
-    if (req.cookies.mail){
-        isUser = true;
-    }
-    else{isUser = false;}
 
 
 
@@ -37,6 +41,15 @@ router.get("/", async (req, res) => {
 
 router.get("/bookshelves", async (req, res) => {
     var isUser;
+
+    if (req.cookies.mail){
+    isUser = true;
+    }
+    else{
+        res.redirect("/signin");
+        isUser = false;
+    }
+
     const user = await User.findOne({mail: req.cookies.mail});
     var bookshelves = await Bookshelf.find({user_id: user._id}).populate('user_id');
     var likedBookshelves = await Bookshelf.find({liked_users: {$in: user._id }}).populate('user_id');
@@ -74,11 +87,18 @@ router.get("/bookshelves", async (req, res) => {
 
 router.get("/reviews", async (req, res) => {
     var isUser;
+
+    if (req.cookies.mail){
+        isUser = true;
+    }
+    else{
+        res.redirect("/signin");
+        isUser = false;
+    }
+
     const user = await User.findOne({mail: req.cookies.mail});
     var rates = await Rate.find({user_id: user._id}).populate('user_id');
     var likedRates = await Rate.find({liked_users: {$in: user._id }}).populate('user_id');
-
-    console.log(rates);
 
     if (req.cookies.mail){
         isUser = true;
@@ -112,6 +132,15 @@ router.get("/reviews", async (req, res) => {
 
 router.get("/bookshelves/like", async (req, res) => {
     var id = req.query.id;
+
+    if (req.cookies.mail){
+        isUser = true;
+    }
+    else{
+        res.redirect("/signin");
+        isUser = false;
+    }
+
     const user = await User.findOne({mail: req.cookies.mail});
     var bookshelf = await Bookshelf.findOne({_id: id});
 
@@ -132,6 +161,15 @@ router.get("/bookshelves/like", async (req, res) => {
 
 router.get("/bookshelves/unlike", async (req, res) => {
     var id = req.query.id;
+
+    if (req.cookies.mail){
+        isUser = true;
+    }
+    else{
+        res.redirect("/signin");
+        isUser = false;
+    }
+
     const user = await User.findOne({mail: req.cookies.mail});
     var bookshelf = await Bookshelf.findOne({_id: id});
 
@@ -151,8 +189,48 @@ router.get("/bookshelves/unlike", async (req, res) => {
 }); 
 
 
+router.get("/bookshelves/del", async (req, res) => {
+    var id = req.query.id;
+
+    if (req.cookies.mail){
+        isUser = true;
+    }
+    else{
+        res.redirect("/signin");
+        isUser = false;
+    }
+
+    const user = await User.findOne({mail: req.cookies.mail});
+    var bookshelf = await Bookshelf.findOne({_id: id});
+
+    if (req.cookies.mail){
+        try{
+            await Bookshelf.findOneAndDelete({_id: id, user_id: user._id});
+            res.redirect("/profile/bookshelves");    
+        }
+        catch{
+            res.redirect("/profile/bookshelves");
+        }
+    }
+    else{
+        res.redirect("/profile/bookshelves");
+    }
+});
+
+
+
 router.get("/reviews/like", async (req, res) => {
     var id = req.query.id;
+
+    if (req.cookies.mail){
+        isUser = true;
+    }
+    else{
+        res.redirect("/signin");
+        isUser = false;
+    }
+
+
     const user = await User.findOne({mail: req.cookies.mail});
     var rate = await Rate.findOne({_id: id});
 
@@ -173,6 +251,15 @@ router.get("/reviews/like", async (req, res) => {
 
 router.get("/reviews/unlike", async (req, res) => {
     var id = req.query.id;
+
+    if (req.cookies.mail){
+        isUser = true;
+    }
+    else{
+        res.redirect("/signin");
+        isUser = false;
+    }
+
     const user = await User.findOne({mail: req.cookies.mail});
     var rate = await Rate.findOne({_id: id});
 
@@ -192,5 +279,67 @@ router.get("/reviews/unlike", async (req, res) => {
 }); 
 
 
+router.get("/reviews/del", async (req, res) => {
+    var id = req.query.id;
+
+    if (req.cookies.mail){
+        isUser = true;
+    }
+    else{
+        res.redirect("/signin");
+        isUser = false;
+    }
+
+    const user = await User.findOne({mail: req.cookies.mail});
+    if (req.cookies.mail){
+        try{
+            await Rate.findOneAndDelete({_id: id, user_id: user._id});
+            res.redirect("/profile/reviews");    
+        }
+        catch{
+            res.redirect("/profile/reviews");
+        }
+    }
+    else{
+        res.redirect("/profile/reviews");
+    }
+});
+
+
+router.post("/bookshelves", async (req, res) => {
+    const user = await User.findOne({mail: req.cookies.mail});
+
+    if (req.cookies.mail){
+        isUser = true;
+    }
+    else{
+        res.redirect("/signin");
+        isUser = false;
+    }
+    const { title } = req.body;
+
+    if (req.cookies.mail){
+        try{
+            var bookshelf = await Bookshelf.create([
+            {
+                user_id: user._id,
+                liked_users: [],
+                shelf_books: [],
+                shelfname: title,
+                like_count: 0,
+                isLiked: false
+            }
+            ]);
+
+            res.redirect(`/profile/bookshelves`);
+        }
+        catch{
+            res.redirect(`/profile/bookshelves`);
+        }
+    }
+    else{
+        res.redirect(`/profile/bookshelves`);
+    }
+});
 
 module.exports = router

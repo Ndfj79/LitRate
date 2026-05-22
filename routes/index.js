@@ -70,7 +70,7 @@ router.get("/", verifyToken, async (req, res) => {
             recBooksGenre = reduceAuthors(recBooksGenre);
             recBooksAuthor = reduceAuthors(recBooksAuthor);
         }
-
+        console.log(isCommentedBooks, isAuthorBooks);
         newBooks = reduceAuthors(newBooks);
 
         res.render("../views/index.hbs", 

@@ -38,17 +38,20 @@ exports.login = async (req, res) => {
         const { mail, password } = req.body;
         
         if (!mail || !password) {
-            return res.status(400).json({ message: "Все поля обязательны для заполнения" });
+            res.clearCookie('myCookie');
+            res.redirect("/signin");
         }
 
         const user = await User.findOne({mail});
         if (!user){
-            return res.status(400).json({ message: "Неверный email или пароль" });
+            res.clearCookie('myCookie');
+            res.redirect("/signin");
         }
 
         const passwordMatch = await bcrypt.compare(password, user.password);
         if (!passwordMatch) {
-            return res.status(400).json({ message: "Неверный email или пароль" });
+            res.clearCookie('myCookie');
+            res.redirect("/signin");
         }
 
         const token = jwt.sign(

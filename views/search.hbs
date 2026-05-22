@@ -54,22 +54,25 @@
         <p class="fs-1 fw-semibold pt-3">Варианты по вашему запросу:</p>
       </div>
 
-      <div class=" cards-recomendation d-flex gap-3 py-2">
         {{#each books}}
-        <div class="card bg-primary text-light " style="width: 18rem;">
-          <a href="/book?bid={{this._id}}" class="no-decoration ">
-            <img src="/proxy/image?url=https://libmir.com{{this.cover_id.url}}" crossorigin="anonymous" height="350px" class="card-img-top" >
-            <div class="card-body d-flex flex-column justify-content-between">
-              <h5 class="card-title">{{this.title}}</h5>
-              <div class="d-flex">
-                <p class="card-text card-footer">{{this.author_ids.name}} </p>
-              </div>
+         <div class="card mb-3" >
+                <a href="/book?bid={{this._id}}" class="no-decoration text-dark">
+                    <div class="row g-0">
+                        <div class="col-md-1">
+                        <img src="/proxy/image?url=https://libmir.com{{this.cover_id.url}}" class="img-fluid rounded-start" alt="Обложка книги">
+                        </div>
+                        <div class="col-md-11">
+                            <div class="card-body">
+                                <h5 class="card-title">{{this.title}}</h5>
+                                <p class="card-text"><small class="fs-6 text-muted">{{#each this.author_ids}} {{this.name}}; {{/each}}</small></p>
+                                <h6>Жанры:{{#each this.genre_ids}} {{this.name}}; {{/each}}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </a>
             </div>
-          </a>
-        </div>
         {{/each}}
 
-      </div>
     {{else}}
     <div class="d-flex pt-5">
         <p class="fs-1 fw-semibold pt-3">По вашему запросу ничего не нашлось, попробуйте ввести название полностью</p>

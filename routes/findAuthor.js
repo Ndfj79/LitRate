@@ -32,7 +32,7 @@ router.post("/", async (req, res) => {
     }
     const { searchText } = req.body;
     var author = await Author.find({name: { $regex: searchText, $options: 'i' }});
-    var books = await Book.find({author_ids: author[0]._id}).populate('author_ids').populate('cover_id').populate('genre_ids').limit(5);
+    var books = await Book.find({author_ids: author[0]._id}).populate('author_ids').populate('cover_id').populate('genre_ids');
     books = reduceAuthors(books);
 
     res.render("../views/authors.hbs", {isUser: isUser, user: user, isPost: isPost, books:books});

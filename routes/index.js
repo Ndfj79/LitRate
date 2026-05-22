@@ -16,7 +16,9 @@ router.get("/", verifyToken, async (req, res) => {
     if (req.user == "No-user"){
         var isUser = false;
         var newBooks = await Book.find({}).sort({year: 1}).limit(5).populate('author_ids').populate('cover_id');
-        var books = await Book.find({}).limit(5).sort({rate_count: 1}).populate('author_ids').populate('cover_id');  
+        var books = await Book.find({}).limit(5).populate('author_ids').populate('cover_id');  
+        
+        var popularBooks = await Book.find({}).sort({rate_count: -1}).limit(5).populate('author_ids').populate('cover_id'); 
 
         newBooks = reduceAuthors(newBooks);
         books = reduceAuthors(books);
@@ -24,7 +26,7 @@ router.get("/", verifyToken, async (req, res) => {
         {
             newBooks: newBooks,
             genreBooks: books,
-            authorBooks: books, 
+            authorBooks: popularBooks, 
         });
     }
     else

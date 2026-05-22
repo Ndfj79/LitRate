@@ -293,6 +293,11 @@ router.get("/reviews/del", async (req, res) => {
     const user = await User.findOne({mail: req.cookies.mail});
     if (req.cookies.mail){
         try{
+            var rate = await Rate.findOne({_id: id});
+            var book = await Book.findOne({_id: rate.book_id});
+            book.rate_count -= 1;
+            book.save();
+
             await Rate.findOneAndDelete({_id: id, user_id: user._id});
             res.redirect("/profile/reviews");    
         }

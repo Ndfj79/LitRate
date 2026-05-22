@@ -74,11 +74,15 @@
 
       </div>
 
-
+      {{#if isUser}}
       <div class="d-inline-flex pt-4 pb-2">
         <p class="fs-3 fw-semibold">От автора, который вам нравится</p>
       </div>
-      
+      {{else}}
+      <div class="d-inline-flex pt-4 pb-2">
+        <p class="fs-3 fw-semibold">Популярное</p>
+      </div>
+      {{/if}}
 
       <div class=" cards-recomendation d-flex gap-3 py-2">
         {{#each authorBooks}}

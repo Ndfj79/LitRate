@@ -347,4 +347,34 @@ router.post("/bookshelves", async (req, res) => {
     }
 });
 
+
+router.get("/out", async (req, res) => {
+    var id = req.query.id;
+
+    if (req.cookies.mail){
+        isUser = true;
+    }
+    else{
+        res.redirect("/signin");
+        isUser = false;
+    }
+
+    const user = await User.findOne({mail: req.cookies.mail});
+    if (req.cookies.mail){
+        try{
+            res.clearCookie('mail');
+            res.clearCookie('token');
+            res.redirect("/");    
+        }
+        catch{
+            res.redirect("/");
+        }
+    }
+    else{
+        res.redirect("/");
+    }
+});
+
+
+
 module.exports = router

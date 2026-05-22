@@ -38,19 +38,22 @@ exports.login = async (req, res) => {
         const { mail, password } = req.body;
         
         if (!mail || !password) {
-            res.clearCookie('myCookie');
+            res.clearCookie('mail');
+            res.clearCookie('token');
             res.redirect("/signin");
         }
 
         const user = await User.findOne({mail});
         if (!user){
-            res.clearCookie('myCookie');
+            res.clearCookie('mail');
+            res.clearCookie('token');
             res.redirect("/signin");
         }
 
         const passwordMatch = await bcrypt.compare(password, user.password);
         if (!passwordMatch) {
-            res.clearCookie('myCookie');
+            res.clearCookie('mail');
+            res.clearCookie('token');
             res.redirect("/signin");
         }
 
